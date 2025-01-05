@@ -19,8 +19,8 @@ public class HomeController {
     }
     @GetMapping("/memberList")
     public String memberList(Model model){
-        List<Member> member= homeService.memberList();
-        model.addAttribute("member",member); //포워딩할때 가져가기위해
+        List<Member> memList= homeService.memberList();
+        model.addAttribute("memList",memList); //포워딩할때 가져가기위해
         return "memberList";//view page(memberlist.html)
     }
 }
