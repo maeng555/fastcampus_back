@@ -8,6 +8,7 @@ spring:
     console:
       enabled: 'true'
       path: /db-console
+  #jpa = hibernate (sql생성)
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:

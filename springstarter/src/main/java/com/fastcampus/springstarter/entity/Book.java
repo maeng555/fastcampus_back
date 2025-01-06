@@ -6,9 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
-    @Entity
+@Entity
     @Getter
     @Setter
     @NoArgsConstructor
@@ -29,5 +30,11 @@ import java.time.LocalDateTime;
         public void prePersist() {
             this.createdAt = LocalDateTime.now(); // 엔티티 저장 전 현재 시간 설정
         }
+        @OneToMany(mappedBy = "book",cascade = CascadeType.ALL)
+        //키가아닌 오브젝트를 연결 private Book book 인부분
+        //cascade - 연결되어있는 리뷰도 삭제  2번책을 지우면 2번책의리뷰도 지워진다
+        private List<Review> reviews; //책하나에 여러개의 리뷰기때매 리스트타입을 가지고있어야한다
+
+
     }
 
