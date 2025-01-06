@@ -16,14 +16,14 @@ public class Review { //create table review ~sql
     @GeneratedValue(strategy = GenerationType.IDENTITY)//자동생성 어노테이션
     private Long id; //리뷰 일련번호 1.2.3.4 자동증가 pk
 
-    private String cotent; //리뷰 내용
+    private String content; //리뷰 내용
     private int rating; //평점
-    private LocalDateTime createAt; //작성일자
+    private LocalDateTime createdAt; //작성일자
 
     @ManyToOne
     //fk를 만들어줘야한다
     @JoinColumn(name = "book_id",referencedColumnName = "id",nullable = false)
-    private Book book; // (Book : id (pk)
+    private Book book; // (Book : id (pk) book.id
 
 
 }

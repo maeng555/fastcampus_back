@@ -40,23 +40,23 @@ public class initDataConfig implements CommandLineRunner {
 
             //임의로 리뷰 3개를 작성
             Review review01 = new Review();
-            review01.setCotent("자세하고 쉽게 되어있어요 ");
+            review01.setContent("자세하고 쉽게 되어있어요 ");
             review01.setRating(4);
-            review01.setCreateAt(LocalDateTime.now());
+            review01.setCreatedAt(LocalDateTime.now());
             review01.setBook(book1); //book1 reivew
             reviewService.save(review01);
 
             Review review02 = new Review();
-            review02.setCotent("그림으로 이해하기 쉽게 설명해줘요  ");
+            review02.setContent("그림으로 이해하기 쉽게 설명해줘요  ");
             review02.setRating(5);
-            review02.setCreateAt(LocalDateTime.now());
+            review02.setCreatedAt(LocalDateTime.now());
             review02.setBook(book2); //book2 reivew
             reviewService.save(review02);
 
             Review review03 = new Review();
-            review03.setCotent("나쁘지않아요 ");
+            review03.setContent("나쁘지않아요 ");
             review03.setRating(5);
-            review03.setCreateAt(LocalDateTime.now());
+            review03.setCreatedAt(LocalDateTime.now());
             review03.setBook(book2);
             reviewService.save(review03);
         }
