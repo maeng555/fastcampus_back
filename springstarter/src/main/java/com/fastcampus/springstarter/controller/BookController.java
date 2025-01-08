@@ -62,7 +62,7 @@ import java.util.Optional;
         @PostMapping("/deleteReview")
         public String deleteReview(Long review_id,Long book_id){
             reviewService.deleteReviewById(review_id);//삭제성공
-            return "redirect:/detail/"+book_id;
+            return "redirect:/detail/"+book_id;  //상세보기추가
 
         }
     }
