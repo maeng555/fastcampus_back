@@ -17,4 +17,7 @@ public class BookViewDTO {
     private String author;
     private int page;
     private LocalDateTime createdAt;
+
+    public BookViewDTO(Long id, String subject, int price, int page, String author, LocalDateTime createdAt) {
+    }
 }
