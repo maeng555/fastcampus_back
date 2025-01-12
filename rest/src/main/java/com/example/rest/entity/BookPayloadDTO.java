@@ -18,7 +18,7 @@ public class BookPayloadDTO {
     private int price;
     @NotBlank
     private String author;
-    @NotBlank
+    @NotBlank //필수입력
     private int page;
 
 }
