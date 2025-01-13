@@ -14,6 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Book Controller", description = "책을관리하는컨트롤러 ")
@@ -48,8 +52,38 @@ public class BookRestController {
 
         }
 
-    }
 
+    }
+    //전체 목록 보여주기
+    //produce는 가독성상 생략도가능  응답타입을 말함
+    @GetMapping(value = "/books",produces = "application/json")
+    @ApiResponse(responseCode = "200", description = "List of books")
+    @Operation(summary="List book API")
+    public List<BookViewDTO> books(){
+        List<BookViewDTO> books = new ArrayList<>();
+        for(Book book : bookService.findAll()){
+            books.add(new BookViewDTO(book.getId(),book.getSubject(),book.getPrice(),book.getAuthor(),
+                    book.getPage(),book.getCreatedAt()));
+        }
+        return books;
+    }
+    //특정 목록 조회
+    @GetMapping(value = "/books/{id}",produces = "application/json")
+    @ApiResponse(responseCode = "200", description = "해당 책만 출력 ")
+    @Operation(summary="book id API")
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        Optional<Book> optionalBook = bookService.findById(id); // optional 잇으면 굿 없으면 null
+        Book book;
+        if(optionalBook.isPresent()){
+            book = optionalBook.get();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        BookViewDTO bookViewDTO = new BookViewDTO(book.getId(),book.getSubject(),book.getPrice(),book.getAuthor(),
+                book.getPage(),book.getCreatedAt());
+        return ResponseEntity.ok(bookViewDTO);
+    }
 
 
 }
