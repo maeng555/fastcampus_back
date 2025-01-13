@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.apache.tomcat.util.http.parser.HttpHeaderParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,6 +84,42 @@ public class BookRestController {
         BookViewDTO bookViewDTO = new BookViewDTO(book.getId(),book.getSubject(),book.getPrice(),book.getAuthor(),
                 book.getPage(),book.getCreatedAt());
         return ResponseEntity.ok(bookViewDTO);
+    }
+    @PutMapping(value = "/books/{id}",consumes = "application/json",produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED )
+    @ApiResponse(responseCode = "400", description = "Please add valid name a description")
+    @ApiResponse(responseCode = "204", description = "Book update")
+    @Operation(summary = "Update an Book")
+    public ResponseEntity<?> update_book(@Valid @RequestBody BookPayloadDTO bookPayloadDTO, @PathVariable Long id){
+        Optional<Book> optionalBook =bookService.findById(id);
+        Book book;
+        if(optionalBook.isPresent()){
+            book = optionalBook.get();
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        }
+        book.setSubject(bookPayloadDTO.getSubject()); // 제목
+        book.setPrice(bookPayloadDTO.getPrice()); // 가격
+        book.setAuthor(bookPayloadDTO.getAuthor()); // 저자
+        book.setPage(bookPayloadDTO.getPage()); //page
+        book=bookService.save(book);
+        BookViewDTO bookViewDTO=new BookViewDTO(book.getId(), book.getSubject(), book.getPrice(), book.getAuthor(),
+                book.getPage(), book.getCreatedAt());
+        return ResponseEntity.ok (bookViewDTO);
+    }
+    @DeleteMapping(value = "/books/{id}",produces = "application/json")
+    public ResponseEntity<?> delet_book(@PathVariable Long id){
+        Optional<Book> optionalBook = bookService.findById(id);
+        Book book;
+        if(optionalBook.isPresent()){
+            book = optionalBook.get();
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        bookService.delete(book);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(null); //202
     }
 
 
