@@ -19,4 +19,8 @@ public class BookImageService {
     public Optional<BookImage> findById(Long image_id){
         return bookImageRepository.findById(image_id);
     }
+
+    public void delete(BookImage bookImage) {
+        bookImageRepository.delete(bookImage);
+    }
 }

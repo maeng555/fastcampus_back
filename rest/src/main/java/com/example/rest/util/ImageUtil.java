@@ -34,4 +34,41 @@ public class ImageUtil {
             return null;
         }
     }
+    public static boolean deleteImage(String uploadPath, Long book_id, String fileName) {
+        try {
+            File f = new File(uploadPath + book_id + "\\" +fileName); // file to be delete
+            if (f.delete())
+            {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean deleteFolder(String uploadPath, Long book_id) {
+        File directory = new File(uploadPath + book_id);
+        if (!directory.exists()) {
+            return false; // The directory doesn't exist
+        }
+        try {
+// List all files in the directory
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (!file.delete()) {
+// If deletion of any file fails, return false
+                        return false;
+                    }
+                }
+            }
+// After all files are deleted, delete the directory itself
+            return directory.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -135,6 +135,7 @@ public class BookRestController {
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             bookService.delete(book);
+            ImageUtil.deleteFolder(uploadPath,id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(null); // 202
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -216,5 +217,22 @@ public class BookRestController {
         headers.setContentType(MediaType.IMAGE_JPEG ); // Set appropriate content type based on image format->수정
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK );
     }
+    @DeleteMapping(value = "/{image_id}/delete")
+    public ResponseEntity<String> delete_photo(@PathVariable Long image_id) {
+        try {
+            Optional<BookImage> optionalBookImage = bookImageService.findById(image_id);
+            if(optionalBookImage.isPresent()){
+                BookImage bookImage = optionalBookImage.get();
+                ImageUtil.deleteImage (uploadPath, bookImage.getBook().getId(), bookImage.getFileName());
+                bookImageService.delete(bookImage);
+                return ResponseEntity.status (HttpStatus.ACCEPTED ).body(null);
+            }else{
+                return ResponseEntity.status (HttpStatus.BAD_REQUEST ).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status (HttpStatus.BAD_REQUEST ).body(null);
+        }
+    }
+
 
 }
