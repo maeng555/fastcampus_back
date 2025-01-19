@@ -31,9 +31,9 @@ public class Customer {
     @Column(columnDefinition = "int default 0")
     private int reserves; //적립금
 
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
-    private List<Review> reviews;
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL,fetch = FetchType.LAZY) //ㅈ지연로딩
+    private List<Review> reviews; // 지연로딩이면 이걸 가져올때 List<Review> reviews=cus.getReviews()
     //고객 1 : 장바구니 n
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     private List<Cart> carts;
 }

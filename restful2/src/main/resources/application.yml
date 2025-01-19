@@ -10,11 +10,11 @@ spring:
       hibernate:
         format_sql: 'true'
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     naming:
       physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: 'true'
 server:
-  port: '8081'
+  port: '8080'
 
 
