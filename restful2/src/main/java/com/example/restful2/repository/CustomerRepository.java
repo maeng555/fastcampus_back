@@ -2,6 +2,8 @@ package com.example.restful2.repository;
 
 import com.example.restful2.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +18,16 @@ public interface CustomerRepository extends JpaRepository<Customer,Long> { //엔
     public Optional<Customer> findByUsernameAndPassword(String username, String password);
 
     public List<Customer> findByAgeGreaterThanEqual(int age);
+
+    //jpql
+    @Query("select c from Customer c where c.age>=:a")
+    public List<Customer> ageGreaterThanEqual(@Param("a") int age);
+    @Query("select c from Customer c where c.username=:username and c.password=:password")
+    public Optional<Customer> UsernameAndPassword(String username, String password);
+
+    //native query 찐데베에이슨ㄴ걸 쓴다
+    //@Query(value = "select * from customer where age>=?1",nativeQuery = true)
+    //public List<Customer> ageGreaterThanEqual(int age);
+
 }
+

@@ -59,6 +59,7 @@ public class CustomerService {
     }
 
     public List<Customer> getAge(int age){
-        return customerRepository.findByAgeGreaterThanEqual(age);
+       // return customerRepository.findByAgeGreaterThanEqual(age);
+        return customerRepository.ageGreaterThanEqual(age);
     }
 }
