@@ -2,6 +2,7 @@ package com.example.restful2.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,4 +33,7 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private List<Review> reviews;
+    //고객 1 : 장바구니 n
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+    private List<Cart> carts;
 }

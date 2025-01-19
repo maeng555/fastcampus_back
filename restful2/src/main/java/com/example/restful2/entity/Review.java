@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.EnableMBeanExport;
 
 import java.util.Date;
 
@@ -26,4 +27,11 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "customer_id",referencedColumnName = "id",nullable = false)
     private Customer customer;
+
+    //리뷰 n : book 1
+    @ManyToOne
+    @JoinColumn(name = "book_id",referencedColumnName = "id",nullable = false) // 외래키
+    private Book book; //pk
+
+
 }
