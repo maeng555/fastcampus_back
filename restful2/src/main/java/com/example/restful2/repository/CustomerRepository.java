@@ -29,5 +29,13 @@ public interface CustomerRepository extends JpaRepository<Customer,Long> { //엔
     //@Query(value = "select * from customer where age>=?1",nativeQuery = true)
     //public List<Customer> ageGreaterThanEqual(int age);
 
+    //두번째 레이지이니셜라이증엑셉션 해결 jpql
+    @Query("SELECT c FROM Customer c LEFT JOIN FETCH c.reviews")
+    public List<Customer> findAllWithReviews();
+
+    //세번째 엔티티 그래프(Entity Graph)를 사용하여 필요한 연관 관계를 명시적으로 로딩으로 레이지해결
+    //@EntityGraph(attributePaths = {"reviews"})
+    //@Query("SELECT c FROM Customer c")
+    //List<Customer> findAllWithReviews();
 }
 

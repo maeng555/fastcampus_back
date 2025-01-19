@@ -19,6 +19,11 @@
     <tr th:each="customer:${customerList}">
       <td th:text="${customer.username}">username</td>
       <td th:text="${customer.customerName}">customerName</td>
+        <td>
+            <ul>
+                <li th:each="review : ${customer.reviews}" th:text="${review.content}">Review content</li>
+            </ul>
+        </td>
     </tr>
 
    </tbody>

@@ -31,6 +31,8 @@ public class Customer {
     @Column(columnDefinition = "int default 0")
     private int reserves; //적립금
 
+    //여기서 lazy 말고 eager로 바꿔야하는데 되는이유 osvi 때문이 - 웹요청에 동안 세션을 열어두는 구성
+    //세션을 정 끊고싶으면 open-in-view: false 이걸 yml spring 에 적용한다
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL,fetch = FetchType.LAZY) //ㅈ지연로딩
     private List<Review> reviews; // 지연로딩이면 이걸 가져올때 List<Review> reviews=cus.getReviews()
     //고객 1 : 장바구니 n
