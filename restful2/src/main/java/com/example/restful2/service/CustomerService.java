@@ -2,6 +2,7 @@ package com.example.restful2.service;
 
 import com.example.restful2.entity.Customer;
 import com.example.restful2.repository.CustomerRepository;
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,38 @@ public class CustomerService {
     public Optional<Customer> getById(Long id){//Pk
         return customerRepository.findById(id);
 
+    }
+    //특정 회원 한명 수정하기
+    public void cusUpdate(Long id,Customer customer){
+        Optional<Customer> optional = customerRepository.findById(id);
+        Customer dbCustomer;
+        if (optional.isPresent()){
+            dbCustomer = optional.get();
+        }else {
+            throw new IllegalArgumentException("errors");
+        }
+        dbCustomer.setUsername(customer.getUsername());
+        dbCustomer.setAge(customer.getAge());
+        customerRepository.save(dbCustomer);
+
+    }
+    //특정 회원 삭제
+    public void cusDelete(Long id){
+        customerRepository.deleteById(id);
+    }
+    //회원의 아이디와 패스워드가 일치하는 회원을 가져오기
+    public Customer login(String username, String password){
+        Optional<Customer> optional = customerRepository.findByUsernameAndPassword(username,password);
+        Customer customer;
+        if (optional.isPresent()){
+            customer = optional.get();
+        }else {
+            throw new IllegalArgumentException("error");
+        }
+        return customer;
+    }
+
+    public List<Customer> getAge(int age){
+        return customerRepository.findByAgeGreaterThanEqual(age);
     }
 }

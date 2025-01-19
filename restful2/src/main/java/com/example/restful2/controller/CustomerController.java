@@ -40,7 +40,7 @@ public class CustomerController {
         return "lists";
     }
     @GetMapping("/detail/{id}")
-    public String getDetail(@PathVariable Long id) throws IllegalAccessException {
+    public String getDetail(@PathVariable Long id,Model model) throws IllegalAccessException {
         Optional<Customer> optional = customerService.getById(id);
         Customer customer;
         if(optional.isPresent()){
@@ -49,6 +49,34 @@ public class CustomerController {
         }else{
             throw new IllegalAccessException("error");
         }
+        model.addAttribute("customer",customer);
         return "detail";
+    }
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id){
+        Customer customer = new Customer();
+        customer.setAge(10);
+        customer.setUsername("홍기리동");
+        customerService.cusUpdate(id,customer);
+        return  "redirect:/";
+
+    }
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        customerService.cusDelete(id);
+        return "redirect:/";
+    }
+    @GetMapping("/login/{username}/{password}")
+    public String login(@PathVariable String username,@PathVariable String password,Model model){
+        Customer customer=customerService.login(username,password);
+        model.addAttribute("customer",customer);
+        return "result";
+    }
+    @GetMapping("/ageList/{age}")
+    public String age(@PathVariable int age, Model model){
+        List<Customer> customerList = customerService.getAge(age);
+        System.out.println(customerList.size());
+        model.addAttribute("customerList",customerList);
+        return "ageList";
     }
 }
