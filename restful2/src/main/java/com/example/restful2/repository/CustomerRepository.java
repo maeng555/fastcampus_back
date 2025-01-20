@@ -37,5 +37,11 @@ public interface CustomerRepository extends JpaRepository<Customer,Long> { //엔
     //@EntityGraph(attributePaths = {"reviews"})
     //@Query("SELECT c FROM Customer c")
     //List<Customer> findAllWithReviews();
+
+    //N+1 쿼리문제를 해결하는방법 (lazyinitlizexpection 해결)
+    //1. 조인으로 쿼리 가져오기, 2엔티티그래프
+    //데이터 로드 방법에 주의하지 않으면 각 고객에 대한 리뷰를 검색할 때 N+1 쿼리 문제가 발생할 수 있습니다.
+    //이 문제는 특히 고객 수가 많고 관련 리뷰가 많은 경우 성능에 큰 영향을 미칠 수 있습니다. 이를 방지하려면 특
+    //정 사용 사례에 따라 가져오기 조인, 엔터티 그래프 또는 일괄 가져오기를 사용하는 것이 가장 좋습니다.
 }
 
