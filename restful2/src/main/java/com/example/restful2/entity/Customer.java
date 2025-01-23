@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -20,13 +21,16 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false,unique = true) //유니크 중복 안됨
     private String username;
     private String password;
     private String customerName;
     private int age;
     private String rating;
     private String occupation;
+    private LocalDateTime createDate;
+
+    private LocalDateTime modifiyDate;
 
     @Column(columnDefinition = "int default 0")
     private int reserves; //적립금

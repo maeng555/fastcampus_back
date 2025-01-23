@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ public class CustomerController {
         c.setAge(50);
         c.setRating("vip");
         c.setOccupation("개발자");
+        c.setCreateDate(LocalDateTime.now());// 이런식으로
         Customer cus =customerService.register(c);
         return "redirect:/";
     }
